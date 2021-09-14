@@ -4,6 +4,7 @@ const errMsg = document.querySelector(".alert-msg");
 const foodCard = document.querySelector(".food-card");
 const loader = document.querySelector(".spinner");
 const foodDetails = document.querySelector(".food-details");
+let cartArray = [];
 // Fetch all data common function
 async function fetchData(url) {
   let res = await fetch(url);
@@ -12,7 +13,13 @@ async function fetchData(url) {
   return data;
 }
 
-searchBtn.addEventListener("click", function () {
+inputBox.addEventListener("keypress", function (e) {
+  if (e.keyCode === 13) {
+    searchBtn.click();
+  }
+});
+
+searchBtn.addEventListener("click", function (e) {
   errMsg.classList.add("d-none");
 
   foodCard.innerHTML = "";
@@ -49,6 +56,9 @@ function mealCardData(inputText) {
 function mealDivData(data) {
   let meals = data.meals;
   loader.classList.add("d-none");
+  if (data.meals == null) {
+    alert("Enter a exist food name");
+  }
   meals.forEach((meal) => {
     let col = document.createElement("div");
     col.className = "col-12 col-md-4 col-lg-4 ";
@@ -103,14 +113,26 @@ function detailsBtn(mealName) {
       let strMeasure = mainData[measure];
 
       let allItems = strIngredient + " " + strMeasure;
-      console.log(allItems);
 
       if (allItems.length > 2 && allItems.indexOf("null null") != 0) {
         li.innerHTML = allItems;
         ul.appendChild(li);
       }
     }
-
-    console.log(mainData);
   });
 }
+
+// function addCart(mealId) {
+//   fetchData(
+//     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
+//   ).then((data) => {
+//     let mealdata = data.meals[0];
+//     if (cartArray.indexOf(cartArray.idMeal) !== -1) {
+//       console.log("alredy loaded");
+//     } else {
+//       let { strMeal, strMealThumb, idMeal } = mealdata;
+//       cartArray = [...cartArray, { idMeal, strMeal, strMealThumb }];
+//       console.log(cartArray);
+//     }
+//   });
+// }
