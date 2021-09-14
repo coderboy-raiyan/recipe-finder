@@ -14,7 +14,8 @@ async function fetchData(url) {
 }
 
 inputBox.addEventListener("keypress", function (e) {
-  if (e.keyCode === 13) {
+  console.log(e.key);
+  if (e.key === "Enter") {
     searchBtn.click();
   }
 });
