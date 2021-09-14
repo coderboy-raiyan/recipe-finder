@@ -58,6 +58,7 @@ function mealDivData(data) {
   loader.classList.add("d-none");
   if (data.meals == null) {
     alert("Enter a exist food name");
+    return;
   }
   meals.forEach((meal) => {
     let col = document.createElement("div");
